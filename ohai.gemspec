@@ -5,19 +5,19 @@ require 'ohai/version'
 spec = Gem::Specification.new do |s|
   s.name = "ohai"
   s.version = Ohai::VERSION
-  s.platform = Gem::Platform::RUBY
   s.summary = "Ohai profiles your system and emits JSON"
   s.description = s.summary
   s.author = "Adam Jacob"
   s.email = "adam@opscode.com"
   s.homepage = "http://wiki.opscode.com/display/chef/Ohai"
 
-  # This only helps with bundler because otherwise we make a dependency based
-  # on what platform we are building a gem on, not what platform we are
-  # installing it on.
+  # Windows gem has special dependencies
   if RUBY_PLATFORM =~ /mswin|mingw|windows/
+    s.platform = Gem::Platform::CURRENT
     s.add_dependency "systemu", "~> 2.2.0"
+    s.add_dependency "ruby-wmi"
   else
+    s.platform = Gem::Platform::RUBY
     s.add_dependency "systemu"
   end
 
