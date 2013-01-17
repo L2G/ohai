@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rubygems/package_task'
 require 'rubygems/specification'
 require 'date'
-require 'rdoc/task'
+require 'yard'
 
 gemspec = eval(IO.read("ohai.gemspec"))
 
@@ -14,10 +14,9 @@ task :install => [:package] do
   sh %{gem install pkg/#{ohai}-#{OHAI_VERSION}}
 end
 
-RDoc::Task.new do |rdoc|
-   rdoc.main = 'README.rdoc'
-   rdoc.rdoc_files.include(rdoc.main, 'lib/*.rb', 'lib/ohai/*.rb',
-      'lib/ohai/mixin/*.rb')
+YARD::Rake::YardocTask.new do |doc|
+   doc.files = ['lib/*.rb', 'lib/ohai/*.rb', 'lib/ohai/mixin/*.rb',
+                'bin/ohai', '-', 'README.rdoc']
 end
 
 begin
