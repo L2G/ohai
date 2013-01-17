@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rubygems/package_task'
 require 'rubygems/specification'
 require 'date'
+require 'rdoc/task'
 
 gemspec = eval(IO.read("ohai.gemspec"))
 
@@ -11,6 +12,12 @@ Gem::PackageTask.new(gemspec).define
 desc "install the gem locally"
 task :install => [:package] do
   sh %{gem install pkg/#{ohai}-#{OHAI_VERSION}}
+end
+
+RDoc::Task.new do |rdoc|
+   rdoc.main = 'README.rdoc'
+   rdoc.rdoc_files.include(rdoc.main, 'lib/*.rb', 'lib/ohai/*.rb',
+      'lib/ohai/mixin/*.rb')
 end
 
 begin

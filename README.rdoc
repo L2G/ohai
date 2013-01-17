@@ -44,12 +44,14 @@ Ohai has some Rake tasks for doing various things.
 
   rake -T
   rake clobber_package  # Remove package products
+  rake clobber_rdoc     # Remove RDoc HTML files
   rake gem              # Build the gem file ohai-$VERSION.gem
   rake install          # install the gem locally
-  rake make_spec        # create a gemspec file
   rake package          # Build all the packages
+  rake rdoc             # Build RDoc HTML files
   rake repackage        # Force a rebuild of the package files
-  rake spec             # Run specs
+  rake rerdoc           # Rebuild RDoc HTML files
+  rake spec             # Run RSpec code examples
   
 ($VERSION is the current version, from the GemSpec in Rakefile)
 
