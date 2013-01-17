@@ -1,8 +1,8 @@
-= ohai
+= Ohai
 
-= DESCRIPTION:
+== DESCRIPTION
 
-Ohai detects data about your operating system. It can be used standalone, but it's primary purpose is to provide node data to Chef.
+Ohai detects data about your operating system. It can be used standalone, but its primary purpose is to provide node data to Chef.
 
 Ohai will print out a JSON data blob for all the known data about your system. When used with Chef, that data is reported back via node attributes.
 
@@ -10,7 +10,7 @@ Opscode distributes ohai as a RubyGem. This README is for developers who want to
 
 * http://wiki.opscode.com/display/chef/Ohai
 
-= DEVELOPMENT:
+== DEVELOPMENT
 
 Before working on the code, if you plan to contribute your changes, you need to read the Opscode Contributing document.
 
@@ -20,25 +20,22 @@ You will also need to set up the repository with the appropriate branches. We do
 
 * http://wiki.opscode.com/display/chef/Working+with+git
 
-(Substitude 'ohai' for 'chef')
+(Substitute 'ohai' for 'chef' in the instructions.)
 
 Once your repository is set up, you can start working on the code. We do use BDD/TDD with RSpec, and soon Cucumber for integration/feature testing, so you'll need to get those installed.
 
-= ENVIRONMENT:
+== ENVIRONMENT
 
-In order to have a dev environment where you can work on Ohai, you'll need to install a few additional gems after setting up the Git repository.
+=== RubyGems and Bundler
 
-Install the following RubyGems.
+In order to have a dev environment where you can work on Ohai, you'll need to install a few additional gems after setting up the Git repository. This is easily done using the Bundler gem:
 
-* rake
-* rspec
-* extlib 
-* systemu
-* json
+  gem install bundler
+  bundle install
 
-  gem install rake rspec extlib systemu json
+Note that Bundler requires commands belonging to the gems it manages be run with +bundle exec+, so Rake would need to be run with +bundle exec rake+ in the examples below.
 
-== Rake Tasks
+=== Rake Tasks
 
 Ohai has some Rake tasks for doing various things.
 
@@ -53,17 +50,18 @@ Ohai has some Rake tasks for doing various things.
   rake rerdoc           # Rebuild RDoc HTML files
   rake spec             # Run RSpec code examples
   
-($VERSION is the current version, from the GemSpec in Rakefile)
+($VERSION is the current version, from lib/ohai/version.rb)
 
-== Spec Testing:
+=== Spec Testing
 
-We use RSpec for unit/spec tests.
+We use RSpec for unit/spec tests. The Rake task +spec+ is run by default when no other task is specified. These two lines are equivalent:
 
+  rake
   rake spec
 
-Because ohai gathers system information, and we don't know what kind of system we might be running on (yet), we're moving away from specs for integration testing and to cucumber.
+Because Ohai gathers system information, and we don't know what kind of system we might be running on (yet), we're moving away from specs toward Cucumber "features" for integration testing.
 
-= LINKS:
+== LINKS
 
 Source:
 
@@ -71,15 +69,13 @@ Source:
 
 Tickets/Issues:
 
-* http://tickets.opscode.com/
-
-(Use the OHAI project)
+* http://tickets.opscode.com/browse/OHAI
 
 Documentation:
 
 * http://wiki.opscode.com/display/chef/Ohai
 
-= LICENSE:
+== LICENSE
 
 Ohai - system information application
 
@@ -89,9 +85,8 @@ License:: Apache License, Version 2.0
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
+You may obtain a copy of the License at:
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
