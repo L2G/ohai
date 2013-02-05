@@ -16,6 +16,12 @@
 # limitations under the License.
 #
 
+# Long-standing bug with systemu on Windows (see OHAI-306 and
+# https://github.com/ahoward/systemu/pull/8)
+if RUBY_PLATFORM =~ /mswin|mingw32|windows/
+  gem 'systemu', '~> 2.2.0'
+end
+
 require 'ohai/exception'
 require 'ohai/config'
 require 'ohai/log'
