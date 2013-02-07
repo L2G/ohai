@@ -15,7 +15,7 @@ spec = Gem::Specification.new do |s|
   if RUBY_PLATFORM =~ /mswin|mingw|windows/
     s.platform = Gem::Platform::CURRENT
     s.add_dependency "systemu", "~> 2.2.0"
-    s.add_dependency "ruby-wmi"
+    s.add_dependency "ruby-wmi", "~> 0.4.0"
   else
     s.platform = Gem::Platform::RUBY
     s.add_dependency "systemu"

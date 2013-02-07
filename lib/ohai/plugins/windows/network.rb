@@ -18,6 +18,7 @@
 
 provides "network"
 
+gem 'ruby-wmi', '~> 0.4.0'
 require 'ruby-wmi'
 
 def encaps_lookup(encap)

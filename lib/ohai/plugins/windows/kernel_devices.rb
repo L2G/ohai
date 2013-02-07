@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+gem 'ruby-wmi', '~> 0.4.0'
 require 'ruby-wmi'
 
 WIN32OLE.codepage = WIN32OLE::CP_UTF8
