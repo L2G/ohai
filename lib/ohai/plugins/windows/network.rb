@@ -18,8 +18,9 @@
 
 provides "network"
 
-gem 'ruby-wmi', '~> 0.4.0'
-require 'ruby-wmi'
+require 'ohai/mixin/wmi_metadata'
+
+extend Ohai::Mixin::WmiMetadata
 
 def encaps_lookup(encap)
   return "Ethernet" if encap.eql?("Ethernet 802.3")
@@ -33,21 +34,15 @@ iface_instance = Mash.new
 # http://msdn.microsoft.com/en-us/library/windows/desktop/aa394217%28v=vs.85%29.aspx
 adapters = WMI::Win32_NetworkAdapterConfiguration.find(:all)
 adapters.each do |adapter|
-    i = adapter.Index
-    iface_config[i] = Mash.new
-    adapter.properties_.each do |p|
-      iface_config[i][p.name.wmi_underscore.to_sym] = adapter.invoke(p.name)
-    end
+    i = get_wmi_property(adapter, 'Index')
+    iface_config[i] = extract_wmi_properties_to_mash(adapter) unless i.nil?
 end
 
 # http://msdn.microsoft.com/en-us/library/windows/desktop/aa394216(v=vs.85).aspx
 adapters = WMI::Win32_NetworkAdapter.find(:all)
 adapters.each do |adapter|
-    i = adapter.Index
-    iface_instance[i] = Mash.new
-     adapter.properties_.each do |p|
-      iface_instance[i][p.name.wmi_underscore.to_sym] = adapter.invoke(p.name)
-    end
+    i = get_wmi_property(adapter, 'Index')
+    iface_instance[i] = extract_wmi_properties_to_mash(adapter) unless i.nil?
 end
 
 iface_instance.keys.each do |i|

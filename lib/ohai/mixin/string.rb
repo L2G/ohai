@@ -21,7 +21,8 @@ class String
   # Makes an underscored, lowercase form from the expression in the string.
   # underscore will also change ’::’ to ’/’ to convert namespaces to paths. 
   # This should implement the same functionality as underscore method in
-  # ActiveSupport::CoreExtensions::String::Inflections
+  # ActiveSupport::CoreExtensions::String::Inflections.
+  # @note RubyWMI 0.4.0 and newer makes this moot.
   def wmi_underscore
      self.gsub(/::/, '/').gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
      gsub(/([a-z\d])([A-Z])/,'\1_\2').tr("-", "_").downcase

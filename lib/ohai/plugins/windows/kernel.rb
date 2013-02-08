@@ -16,8 +16,9 @@
 # limitations under the License.
 #
 
-gem 'ruby-wmi', '~> 0.4.0'
-require 'ruby-wmi'
+require 'ohai/mixin/wmi_metadata'
+
+extend Ohai::Mixin::WmiMetadata
 
 WIN32OLE.codepage = WIN32OLE::CP_UTF8
 
@@ -40,10 +41,7 @@ def os_lookup(sys_type)
 end
 
 host = WMI::Win32_OperatingSystem.find(:first)
-kernel[:os_info] = Mash.new
-host.properties_.each do |p|
-  kernel[:os_info][p.name.wmi_underscore.to_sym] = host.send(p.name)
-end
+kernel[:os_info] = extract_wmi_properties_to_mash(host)
 
 kernel[:name] = "#{kernel[:os_info][:caption]}"
 kernel[:release] = "#{kernel[:os_info][:version]}"
@@ -51,9 +49,6 @@ kernel[:version] = "#{kernel[:os_info][:version]} #{kernel[:os_info][:csd_versio
 kernel[:os] = os_lookup(kernel[:os_info][:os_type]) || languages[:ruby][:host_os]
 
 host = WMI::Win32_ComputerSystem.find(:first)
-kernel[:cs_info] = Mash.new
-host.properties_.each do |p|
-  kernel[:cs_info][p.name.wmi_underscore.to_sym] = host.send(p.name)
-end
+kernel[:cs_info] = extract_wmi_properties_to_mash(host)
 
 kernel[:machine] = machine_lookup("#{kernel[:cs_info][:system_type]}")
