@@ -16,8 +16,8 @@
 # limitations under the License.
 #
 
-require 'ruby-wmi'
 require 'socket'
+require 'ohai/mixin/wmi_metadata'
 
 host = WMI::Win32_ComputerSystem.find(:first)
 hostname "#{host.Name}"

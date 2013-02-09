@@ -16,7 +16,8 @@
 # limitations under the License.
 #
 
-require 'ruby-wmi'
+require 'ohai/mixin/wmi_metadata'
+extend Ohai::Mixin::WmiMetadata
 
 provides "cpu"
 
@@ -35,12 +36,11 @@ WMI::Win32_Processor.find(:all).each do |processor|
   # when we don't see numberofcores property
   #
 
-  number_of_cores = nil
-  begin
-    number_of_cores = processor.numberofcores
-    cpu_number += number_of_cores
-  rescue NoMethodError => e
+  number_of_cores = get_wmi_property(processor, 'NumberOfCores')
+  if number_of_cores.nil?
     Ohai::Log.info("Can not find numberofcores property on Win32_Processor. Consider applying this patch: http://support.microsoft.com/kb/932370")
+  else
+    cpu_number += number_of_cores
   end
 
   current_cpu = index.to_s

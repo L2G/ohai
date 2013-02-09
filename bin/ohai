@@ -41,8 +41,9 @@ end
 
 if RUBY_PLATFORM =~ /mswin|mingw32|windows/
   begin
+    gem 'ruby-wmi', '~> 0.4.0'
     require 'ruby-wmi'
-  rescue LoadError
+  rescue LoadError, Gem::LoadError
     STDERR.puts "ruby-wmi failed to load - is it installed?"
     raise
   end

@@ -17,6 +17,7 @@ spec = Gem::Specification.new do |s|
   # installing it on.
   if RUBY_PLATFORM =~ /mswin|mingw|windows/
     s.add_dependency "systemu", "~> 2.2.0"
+    s.add_dependency "ruby-wmi", "~> 0.4.0"
   else
     s.add_dependency "systemu"
   end

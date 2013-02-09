@@ -15,7 +15,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require 'ruby-wmi'
+
+require 'ohai/mixin/wmi_metadata'
+
+extend Ohai::Mixin::WmiMetadata
 
 WIN32OLE.codepage = WIN32OLE::CP_UTF8
 
@@ -24,10 +27,7 @@ pnp_drivers = Mash.new
 
 drivers = WMI::Win32_PnPSignedDriver.find(:all)
 drivers.each do |driver|
-  pnp_drivers[driver.DeviceID] = Mash.new
-  driver.properties_.each do |p|
-    pnp_drivers[driver.DeviceID][p.name.wmi_underscore.to_sym] = driver.send(p.name)
-  end
+  pnp_drivers[driver.DeviceID] = extract_wmi_properties_to_mash(driver)
   if driver.DeviceName
     kext[driver.DeviceName] = pnp_drivers[driver.DeviceID]
     kext[driver.DeviceName][:version] = pnp_drivers[driver.DeviceID][:driver_version]

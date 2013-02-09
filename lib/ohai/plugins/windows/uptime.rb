@@ -15,7 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require 'ruby-wmi'
+
+require 'ohai/mixin/wmi_metadata'
 
 provides "uptime", "uptime_seconds"
 

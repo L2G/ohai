@@ -16,7 +16,9 @@
 # limitations under the License.
 #
 
-require 'ruby-wmi'
+require 'ohai/mixin/wmi_metadata'
+
+extend Ohai::Mixin::WmiMetadata
 
 fs = Mash.new
 ld_info = Mash.new
@@ -27,10 +29,7 @@ disks = WMI::Win32_LogicalDisk.find(:all)
 disks.each do |disk|
     filesystem = disk.DeviceID
     fs[filesystem] = Mash.new
-    ld_info[filesystem] = Mash.new
-    disk.properties_.each do |p|
-      ld_info[filesystem][p.name.wmi_underscore.to_sym] = disk.send(p.name)
-    end
+    ld_info[filesystem] = extract_wmi_properties_to_mash(disk)
     fs[filesystem][:kb_size] = ld_info[filesystem][:size].to_i / 1000
     fs[filesystem][:kb_available] = ld_info[filesystem][:free_space].to_i / 1000
     fs[filesystem][:kb_used] = fs[filesystem][:kb_size].to_i - fs[filesystem][:kb_available].to_i
